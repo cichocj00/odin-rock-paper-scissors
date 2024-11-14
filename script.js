@@ -12,3 +12,7 @@ function getComputerChoice() {
 
     return computerChoice;
 }
+
+function getHumanChoice() {
+   return cprompt("Choose: rock, paper or scissors").toLowerCase();
+}
