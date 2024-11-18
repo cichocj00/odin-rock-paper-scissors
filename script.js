@@ -1,84 +1,76 @@
-let humanScore = 0;
-let computerScore = 0;
+const buttons = document.querySelectorAll('button');
+const playerScore = document.querySelector('.player-score');
+const computerScore = document.querySelector('.computer-score');
 
-function getComputerChoice() {
+
+buttons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+        playRound(e.target.className, getComputerSelection());
+    })
+})
+
+function getComputerSelection() {
     const randomInt = Math.floor(Math.random() * 3);
-    let computerChoice = "";
+    let computerSelection = "";
 
     if (randomInt === 0) {
-        computerChoice = 'rock';
+        computerSelection = 'rock';
     } else if (randomInt === 1) {
-        computerChoice = 'paper';
+        computerSelection = 'paper';
     } else {
-        computerChoice = 'scissors'
+        computerSelection = 'scissors'
     }
 
-    return computerChoice;
+    return computerSelection;
 }
 
-function getHumanChoice() {
-   return prompt("Choose: rock, paper or scissors").toLowerCase();
-}
-
-function playRound(humanChoice, computerChoice) {
-    if (humanChoice === 'rock' && computerChoice === 'rock') {
+function playRound(playerSelection, computerSelection) {
+    if (playerSelection === 'rock' && computerSelection === 'rock') {
         console.log('Tie!')
     }
 
-    if (humanChoice === 'rock' && computerChoice === 'paper') {
+    if (playerSelection === 'rock' && computerSelection === 'paper') {
         console.log('You loose!. Paper beats rock!')
         computerScore += 1;
     }
 
-    if (humanChoice === 'rock' && computerChoice === 'scissors') {
+    if (playerSelection === 'rock' && computerSelection === 'scissors') {
         console.log('You win! Rock beats scissors!')
         humanScore += 1;
     }
 
-    if (humanChoice === 'paper' && computerChoice === 'rock') {
+    if (playerSelection === 'paper' && computerSelection === 'rock') {
         console.log('You win! Paper beats rock!')
         humanScore += 1;
     }
 
-    if (humanChoice === 'paper' && computerChoice === 'paper') {
+    if (playerSelection === 'paper' && computerSelection === 'paper') {
         console.log('Tie!')
     }
 
-    if (humanChoice === 'paper' && computerChoice === 'scissors') {
+    if (playerSelection === 'paper' && computerSelection === 'scissors') {
         console.log('You loose!. Scissors beats paper!')
         computerScore += 1;
     }
 
-    if (humanChoice === 'scissors' && computerChoice === 'rock') {
+    if (playerSelection === 'scissors' && computerSelection === 'rock') {
         console.log('You loose!. Rock beats scissors!')
         computerScore += 1;
     }
 
-    if (humanChoice === 'scissors' && computerChoice === 'paper') {
+    if (playerSelection === 'scissors' && computerSelection === 'paper') {
         console.log('You win! Scissors beats paper!')
         humanScore += 1;
     }
 
-    if (humanChoice === 'scissors' && computerChoice === 'scissors') {
+    if (playerSelection === 'scissors' && computerSelection === 'scissors') {
         console.log('Tie!')
     }
 }
 
-function playGame() {
-    for (let i = 0; i < 5; ++i) {
-        const humanChoice = getHumanChoice();
-        const computerChoice = getComputerChoice();
-        playRound(humanChoice, computerChoice);
-    }
+// function checkWin(playerScore, computerScore) {
+//     if (playerScore === 5 || computerScore === 5) {
+//         // wyświetlanie 'modala' z informacją kto wygał
+//     }
 
-    if (humanScore > computerScore) {
-        console.log('YOU WIN!!!');
-    } else if (humanScore < computerScore) {
-        console.log("YOU LOSE!!!")
-    } else {
-        console.log('TIE!')
-    }
-}
-
-playGame();
-
+// }
