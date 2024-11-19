@@ -1,12 +1,21 @@
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('.play-button');
+const replayButton = document.querySelector('.replay-button');
+const winnerContainer = document.querySelector('.winner-container');
+const winner = document.querySelector('.winner');
 const playerScore = document.querySelector('.player-score');
 const computerScore = document.querySelector('.computer-score');
 
-
 buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
-        playRound(e.target.className, getComputerSelection());
+        playRound(e.target.textContent.toLowerCase(), getComputerSelection());
     })
+})
+
+replayButton.addEventListener('click', () => {
+    playerScore.textContent = "0";
+    computerScore.textContent = "0";
+    buttons.forEach((button) => button.disabled = false)
+    winnerContainer.classList.add('hidden');
 })
 
 function getComputerSelection() {
@@ -25,52 +34,46 @@ function getComputerSelection() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection === 'rock' && computerSelection === 'rock') {
-        console.log('Tie!')
-    }
-
     if (playerSelection === 'rock' && computerSelection === 'paper') {
-        console.log('You loose!. Paper beats rock!')
-        computerScore += 1;
+        addPoint(computerScore);
     }
 
     if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        console.log('You win! Rock beats scissors!')
-        humanScore += 1;
+        addPoint(playerScore);
     }
 
     if (playerSelection === 'paper' && computerSelection === 'rock') {
-        console.log('You win! Paper beats rock!')
-        humanScore += 1;
-    }
-
-    if (playerSelection === 'paper' && computerSelection === 'paper') {
-        console.log('Tie!')
+        addPoint(playerScore);
     }
 
     if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        console.log('You loose!. Scissors beats paper!')
-        computerScore += 1;
+        addPoint(computerScore);
     }
 
     if (playerSelection === 'scissors' && computerSelection === 'rock') {
-        console.log('You loose!. Rock beats scissors!')
-        computerScore += 1;
+        addPoint(computerScore);
     }
 
     if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        console.log('You win! Scissors beats paper!')
-        humanScore += 1;
-    }
-
-    if (playerSelection === 'scissors' && computerSelection === 'scissors') {
-        console.log('Tie!')
+        addPoint(playerScore);
     }
 }
 
-// function checkWin(playerScore, computerScore) {
-//     if (playerScore === 5 || computerScore === 5) {
-//         // wyświetlanie 'modala' z informacją kto wygał
-//     }
+function addPoint(side) {
+    side.textContent = parseInt(side.textContent) + 1;
+    checkWin(playerScore, computerScore);
+}
 
-// }
+function checkWin(playerScore, computerScore) {
+    if (playerScore.textContent == 5) {
+        winnerContainer.classList.remove('hidden');
+        winner.textContent = "You win!";
+        buttons.forEach((button) => button.disabled = true)
+    }
+
+    if (computerScore.textContent == 5) {
+        winnerContainer.classList.remove('hidden');
+        winner.textContent = "You loose!";
+        buttons.forEach((button) => button.disabled = true)
+    }
+}
